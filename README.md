@@ -6,14 +6,14 @@ A rule-based machine learning model that assigns credit scores (ranging from 0 t
 
 ## 🎯 Objective
 
-The goal of this project is to analyze transaction-level data from the Aave V2 protocol and score each wallet based on behavioral features such as loan repayment, liquidation history, and overall activity. This scoring system can be used to differentiate between responsible, risky, and bot-like wallets.
+This project analyzes transaction-level data from the Aave V2 protocol and scores each wallet based on behavioral features such as loan repayment, liquidation history, and overall usage patterns. The scoring system helps identify responsible, risky, or bot-like wallets.
 
 ---
 
 ## 📊 Dataset
 
 - **Source**: Aave V2 DeFi protocol
-- **Format**: JSON (sample ~100K transactions)
+- **Format**: JSON (~100K transactions)
 - **Size**: ~87 MB
 - **Transaction Types**:
   - `deposit`
@@ -28,17 +28,7 @@ The goal of this project is to analyze transaction-level data from the Aave V2 p
 
 ### ✅ Prerequisites
 
-Make sure you have Python 3.8+ and the following Python packages installed:
-
-```
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-```
-
-You can install them using:
+Make sure you have Python 3.8+ and the following libraries installed:
 
 ```bash
 pip install -r requirements.txt
@@ -51,48 +41,47 @@ python aave_credit_scoring.py
 ```
 
 This will:
-- Load and process the transaction JSON
+- Load and process the transaction data
 - Generate behavior-based features
 - Score each wallet on a 0–1000 scale
-- Save:
-  - `wallet_scores.csv` (wallet address + credit score)
-  - `wallet_score_distribution.png` (score distribution plot)
+- Save outputs:
+  - `wallet_scores.csv` – wallet address + credit score
+  - `wallet_score_distribution.png` – visual score distribution
 
 ---
 
 ## 🧠 Scoring Logic
 
-Wallets are scored using a **weighted combination** of behavior-based features:
+Wallets are scored using a **weighted combination** of features:
 
-- 📈 **Positive Indicators**:
-  - Repay-to-borrow ratio
-  - High deposit and repay counts
-  - Low liquidation events
-  - Recent and regular activity
+### 🔼 Positive Indicators
+- High repay-to-borrow ratio
+- Frequent deposits and repayments
+- No or few liquidation events
+- Recent and consistent activity
 
-- ⚠️ **Negative Indicators**:
-  - High borrow without repayment
-  - Frequent liquidations
-  - Inactive or one-time interactions
+### 🔽 Negative Indicators
+- Borrowing without repayment
+- High liquidation frequency
+- Infrequent or one-off activity
 
-### Weight-based Heuristic Formula
-Features were normalized and combined using this custom weighting:
+### 🧮 Feature Weights
 
-| Feature | Weight |
-|---------|--------|
-| Total transactions | +1 |
-| Deposit count | +1 |
-| Borrow count | -0.5 |
-| Repay count | +1 |
-| Redeem count | +0.5 |
-| Liquidation count | -1 |
-| Total deposited | +1 |
-| Total borrowed | -0.5 |
-| Total repaid | +1 |
-| Repay/Borrow ratio | +1 |
-| Last activity timestamp | +0.2 |
+| Feature                  | Weight |
+|--------------------------|--------|
+| Total transactions       | +1     |
+| Deposit count            | +1     |
+| Borrow count             | -0.5   |
+| Repay count              | +1     |
+| Redeem count             | +0.5   |
+| Liquidation count        | -1     |
+| Total deposited          | +1     |
+| Total borrowed           | -0.5   |
+| Total repaid             | +1     |
+| Repay/Borrow ratio       | +1     |
+| Last activity timestamp  | +0.2   |
 
-The weighted sum is scaled to a 0–1000 range.
+All scores are normalized and scaled between **0 and 1000**.
 
 ---
 
@@ -100,52 +89,58 @@ The weighted sum is scaled to a 0–1000 range.
 
 ```
 aave-credit-scoring/
-├── aave_credit_scoring.py            # Main script
-├── wallet_scores.csv                 # Output: Wallet scores
-├── wallet_score_distribution.png     # Output: Distribution graph
-├── README.md                         # Project overview (this file)
-├── analysis.md                       # Behavior analysis + observations
-├── requirements.txt                  # Python dependencies
+├── aave_credit_scoring.py            # Main Python script
+├── wallet_scores.csv                 # Wallet credit scores
+├── wallet_score_distribution.png     # Credit score histogram
+├── README.md                         # This file
+├── analysis.md                       # Score range analysis & insights
+├── requirements.txt                  # Project dependencies
 ```
 
 ---
 
-## 📈 Credit Score Ranges
+## 📈 Credit Score Distribution
 
-| Score Range | Meaning |
-|-------------|---------|
-| 800–1000    | Excellent – Regular, responsible, low risk |
-| 600–799     | Good – Mostly healthy usage |
-| 400–599     | Fair – Average or moderate risk |
-| 200–399     | Poor – Risky, incomplete repayment |
-| 0–199       | Very Poor – High liquidation, suspicious activity |
+Below is a visualization of the credit score distribution across all wallets:
+
+![Credit Score Distribution](wallet_score_distribution.png)
+
+---
+
+## 📊 Score Ranges
+
+| Score Range | Interpretation |
+|-------------|----------------|
+| 800–1000    | Excellent – Highly responsible user |
+| 600–799     | Good – Mostly reliable |
+| 400–599     | Fair – Medium risk |
+| 200–399     | Poor – Risky patterns |
+| 0–199       | Very Poor – Likely exploitative/bot |
 
 ---
 
 ## 📄 Deliverables
 
-- ✅ `wallet_scores.csv`
-- ✅ `wallet_score_distribution.png`
-- ✅ `README.md`
-- ✅ `analysis.md`
+- ✅ `wallet_scores.csv` – Wallet scores  
+- ✅ `wallet_score_distribution.png` – Score histogram  
+- ✅ `README.md` – Project overview  
+- ✅ `analysis.md` – Score behavior insights  
 
 ---
 
-## 🧠 Why It Matters
+## 🌐 Why This Matters
 
-Credit scoring in DeFi helps unlock undercollateralized lending opportunities. This model simulates the traditional financial scoring system in a decentralized setting and helps filter out unreliable or bot-like wallet behaviors.
+In DeFi, credit scoring enables **undercollateralized lending**—a breakthrough compared to today’s overcollateralized systems. This project lays the foundation for risk-based lending using real behavioral data from the Aave protocol.
 
 ---
 
 ## 👨‍💻 Author
 
 **Jayesh Kamble** – AI Engineer Intern Candidate  
-[LinkedIn]([https://linkedin.com/](https://www.linkedin.com/in/jayesh-kamble-/)) 
+[LinkedIn](https://www.linkedin.com/in/jayesh-kamble-/)
 
 ---
 
-## 📄 License
+## 📜 License
 
-This project is licensed under the MIT License.
-
-
+This project is licensed under the **MIT License**.
