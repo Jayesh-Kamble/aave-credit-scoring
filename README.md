@@ -1,106 +1,144 @@
-# Aave V2 Credit Scoring System
+# 🏦 Aave V2 Credit Scoring System
 
-A machine learning model that assigns credit scores (0-1000) to cryptocurrency wallets based on their transaction behavior on the Aave V2 DeFi protocol.
+A machine learning pipeline that assigns credit scores (0–1000) to cryptocurrency wallets based on their transaction behavior on the Aave V2 DeFi protocol.
+
+---
 
 ## 🎯 Project Overview
 
-This project develops a robust credit scoring system for DeFi wallets using transaction data from the Aave V2 protocol. The model identifies responsible vs. risky wallet behavior patterns.
+This project aims to develop a robust credit scoring system for DeFi wallets using transaction-level data from the Aave V2 protocol. The model identifies responsible vs. risky wallet behavior by analyzing user interactions such as deposits, borrows, repayments, redemptions, and liquidations.
+
+---
 
 ## 📊 Dataset
 
-- **Source**: Aave V2 protocol transaction data
-- **Size**: 100K transaction records
+- **Source**: Aave V2 protocol (DeFi transaction history)
+- **Size**: ~100K records
 - **Format**: JSON
-- **Transaction Types**: deposit, borrow, repay, redeemunderlying, liquidationcall
+- **Transaction Types**:
+  - `deposit`
+  - `borrow`
+  - `repay`
+  - `redeemunderlying`
+  - `liquidationcall`
+
+---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### ✅ Prerequisites
+
 - Python 3.8+
-- pip package manager
+- `pip` package manager
 
-### Installation
+### ⚙️ Installation
 
-1. Clone the repository:
-git clone https://github.com/yourusername/aave-credit-scoring.git
-cd aave-credit-scoring
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/aave-credit-scoring.git
+   cd aave-credit-scoring
+   ```
 
-text
+2. **Create a virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate        # On Windows: venv\Scripts\activate
+   ```
 
-2. Create virtual environment:
-python -m venv venv
-source venv/bin/activate # On Windows: venv\Scripts\activate
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-text
-
-3. Install dependencies:
-pip install -r requirements.txt
-
-text
-
-### Usage
+### ▶️ Usage
 
 Run the credit scoring system:
+```bash
 python main.py
-
-text
+```
 
 This will:
-- Process the JSON transaction data
-- Generate features for each wallet
-- Apply the ML model
-- Output credit scores (0-1000)
+- Load and process the JSON transaction data
+- Generate features per wallet
+- Apply the credit scoring model
+- Output wallet scores in the range of 0–1000
+
+---
 
 ## 🏗️ Project Structure
 
-├── data/ # Data storage
-├── src/ # Source code
-│ ├── data_processing.py
-│ ├── feature_engineering.py
-│ ├── model.py
-│ └── scoring.py
-├── models/ # Trained models
-├── notebooks/ # Jupyter notebooks
-├── main.py # Main execution script
-├── analysis.md # Score analysis
-└── README.md
+```
+aave-credit-scoring/
+├── data/                  # Raw and processed data
+│   └── user_transactions.json
+├── models/                # Trained models (if any)
+├── notebooks/             # Jupyter notebooks for analysis
+├── src/                   # Source code
+│   ├── data_processing.py
+│   ├── feature_engineering.py
+│   ├── model.py
+│   └── scoring.py
+├── main.py                # Main execution script
+├── analysis.md            # Score distribution analysis
+├── README.md              # Project overview and instructions
+└── requirements.txt       # Python dependencies
+```
 
-text
+---
 
-## 📈 Features
+## 📈 Features Used in Scoring
 
-The model uses these key features:
-- **Repayment Behavior**: Repay-to-borrow ratio
-- **Activity Patterns**: Transaction frequency and duration
-- **Risk Indicators**: Liquidation history
-- **Portfolio Management**: Asset diversification
+The model uses the following features derived from wallet behavior:
+
+- **Repayment Behavior**: `repay_to_borrow_ratio`
+- **Activity Patterns**: Number and type of actions (deposits, borrows, redeems, etc.)
+- **Risk Indicators**: Number of `liquidationcall` events
+- **Engagement**: Frequency and recency of wallet activity
+- **Volume Behavior**: Total deposited, borrowed, and repaid amounts
+
+---
 
 ## 🎯 Credit Score Logic
 
-- **800-1000**: Excellent (Consistent repayments, long-term user)
-- **600-799**: Good (Reliable behavior, occasional issues)
-- **400-599**: Fair (Average risk profile)
-- **200-399**: Poor (High risk indicators)
-- **0-199**: Very Poor (Frequent liquidations, poor repayment)
+| Score Range | Description                             |
+|-------------|-----------------------------------------|
+| 800–1000    | Excellent – Long-term, responsible user |
+| 600–799     | Good – Generally reliable               |
+| 400–599     | Fair – Moderate risk                    |
+| 200–399     | Poor – Risky behavior detected          |
+| 0–199       | Very Poor – Frequent liquidations, bots |
+
+---
 
 ## 📊 Model Performance
 
 - **Algorithm**: Random Forest Regressor
 - **Validation**: Time-series cross-validation
-- **Key Metrics**: RMSE, MAE, R²
+- **Metrics**:
+  - RMSE (Root Mean Square Error)
+  - MAE (Mean Absolute Error)
+  - R² Score
+
+---
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create a feature branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to GitHub (`git push origin feature-branch`)
+5. Open a Pull Request
+
+---
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
+---
+
 ## 👥 Author
 
-[Your Name] - AI Engineer Intern Candidate
+**[Jayesh Kamble]** – AI Engineer Intern Candidate
+
+[LinkedIn](https://www.linkedin.com/) | [GitHub](https://github.com/)
